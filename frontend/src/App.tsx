@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import axios from 'axios'; // Ensure axios is installed
 import { TextField, MenuItem, Button, List, ListItem, ListItemText, Divider } from '@mui/material';
 
 interface ServiceRequest {
@@ -34,9 +35,7 @@ const priorities = ['Low', 'Medium', 'High', 'Emergency'];
 const statuses = ['unassigned', 'assigned', 'inprogress', 'completed'];
 
 function App() {
-
   const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
-
   const [formData, setFormData] = useState({
     employeeName: '',
     priority: '',
@@ -48,46 +47,50 @@ function App() {
     status: 'unassigned',
   });
 
+  useEffect(() => {
+    const fetchServiceRequests = async () => {
+      try {
+        const response = await axios.get('/api/serviceRequests');
+        setServiceRequests(response.data);
+      } catch (error) {
+        console.error('Error fetching service requests:', error);
+      }
+    };
+    fetchServiceRequests();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
-
     e.preventDefault();
-
-    setServiceRequests([...serviceRequests, formData]);
-
-    setFormData({
-      employeeName: '',
-      priority: '',
-      location: '',
-      recipientName: '',
-      cardMessage: '',
-      flowerType: '',
-      deliveryDateTime: '',
-      status: 'unassigned',
-    });
-
+    try {
+      await axios.post('/api/serviceRequests', formData);
+      setServiceRequests([...serviceRequests, formData]); // Optionally, refetch from the backend
+      setFormData({
+        employeeName: '',
+        priority: '',
+        location: '',
+        recipientName: '',
+        cardMessage: '',
+        flowerType: '',
+        deliveryDateTime: '',
+        status: 'unassigned',
+      });
+    } catch (error) {
+      console.error('Error submitting service request:', error);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     const { name, value } = e.target;
-
-    setFormData(prevState => ({
-
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-
     }));
-
   };
 
   return (
-
       <div className="App">
-
         <h1>Flower Delivery Service Request Form</h1>
-
         <form onSubmit={handleSubmit} style={{ margin: '20px' }}>
-
           <TextField
               label="Employee Name"
               variant="outlined"
@@ -96,7 +99,6 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           />
-
           <TextField
               select
               label="Priority"
@@ -106,13 +108,12 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           >
-            {priorities.map(option => (
+            {priorities.map((option) => (
                 <MenuItem key={option} value={option}>
                   {option}
                 </MenuItem>
             ))}
           </TextField>
-
           <TextField
               label="Location"
               variant="outlined"
@@ -121,7 +122,6 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           />
-
           <TextField
               label="Recipient Name"
               variant="outlined"
@@ -130,7 +130,6 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           />
-
           <TextField
               label="Card Message"
               variant="outlined"
@@ -141,7 +140,6 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           />
-
           <TextField
               select
               label="Flower Type"
@@ -151,13 +149,12 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           >
-            {flowerOptions.map(option => (
+            {flowerOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
             ))}
           </TextField>
-
           <TextField
               type="datetime-local"
               label="Delivery Date and Time"
@@ -168,7 +165,6 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           />
-
           <TextField
               select
               label="Status"
@@ -178,46 +174,31 @@ function App() {
               onChange={handleChange}
               style={{ margin: '10px' }}
           >
-            {statuses.map(status => (
+            {statuses.map((status) => (
                 <MenuItem key={status} value={status}>
                   {status}
                 </MenuItem>
             ))}
           </TextField>
-
           <Button type="submit" variant="contained" color="primary" style={{ margin: '10px' }}>
             Submit Request
           </Button>
-
         </form>
-
         <List component="nav" aria-label="service requests">
-
           {serviceRequests.map((request, index) => (
-
               <React.Fragment key={index}>
-
                 <ListItem>
-
                   <ListItemText
                       primary={`Request by ${request.employeeName} for ${request.recipientName}: "${request.flowerType}" delivery on ${request.deliveryDateTime}`}
                       secondary={`Priority: ${request.priority}, Location: ${request.location}, Card Message: "${request.cardMessage}", Status: ${request.status}`}
                   />
-
                 </ListItem>
-
                 <Divider />
-
               </React.Fragment>
-
           ))}
-
         </List>
-
       </div>
-
   );
-
 }
 
 export default App;

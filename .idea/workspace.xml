@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4de7eb33-c498-4145-92da-79d7db742c10" name="Changes" comment="Init Commit - Added Form" />
+    <list default="true" id="4de7eb33-c498-4145-92da-79d7db742c10" name="Changes" comment="Init Commit - Added Form">
+      <change afterPath="$PROJECT_DIR$/backend/src/routes/serviceRequests.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/common/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,6 +52,7 @@
     "npm.frontend.executor": "Run",
     "npm.install.executor": "Run",
     "npm.test.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "D:\\steel\\Downloads\\hw3-starter-code-main\\hw3-starter-code-main\\common\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }

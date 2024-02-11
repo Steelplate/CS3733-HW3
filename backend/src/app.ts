@@ -1,12 +1,12 @@
 import express from 'express';
-import example from "./routes/example";
+import serviceRequestsRouter from "./routes/serviceRequests";
 
 const app = express();
+const PORT = 3001;
 
 app.use(express.json());
+app.use("/api/serviceRequests", serviceRequestsRouter);
 
-app.use("/api/example", example);
-
-app.listen(3001, () => {
-    console.log("started");
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
 });
